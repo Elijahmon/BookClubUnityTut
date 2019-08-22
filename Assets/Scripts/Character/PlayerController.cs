@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     Transform _bulletSpawnPointR;
     [SerializeField]
     Transform _bulletCasingSpawnPoint;
+    [SerializeField]
+    ChaseCamera _cam;
     #endregion
 
     #region Stats
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour
                     _anim.SetBool("Moving", true);
                     currentDirection = input > 0 ? 1 : -1;
                     _anim.SetInteger("Direction", currentDirection);
+                    _cam.UpdateCamTarget(currentDirection);
                 }
                 else
                 {
