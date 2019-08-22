@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour  
 {
-    enum FireMode { SINGLE, BURST, RAPID};
+    public enum FireMode { SINGLE, BURST, RAPID};
 
     #region References
     [SerializeField]
@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
             b.Init(this);
             bulletPool.Add(b);
         }
+        UIController.instance.UpdateFireMode(currentFireMode);
+        changeFireOldtState = false;
     }
 
     #region Input
@@ -140,9 +142,9 @@ public class PlayerController : MonoBehaviour
 
     public void ProcessChangeFireModeInput(bool input)
     {
-        if(changeFireOldtState != input)
+        if(changeFireOldtState != input && input) //Is the button pressed down without being previously pressed down
         {
-            changeFireOldtState = input;
+            
             if (currentFireMode == FireMode.RAPID)
             {
                 currentFireMode = FireMode.SINGLE;
@@ -152,8 +154,10 @@ public class PlayerController : MonoBehaviour
                 currentFireMode += 1;
             }
             _anim.SetInteger("FireMode", (int)currentFireMode);
+            UIController.instance.UpdateFireMode(currentFireMode);
+            //Debug.Log("Changing Firemode");
         }
-        
+        changeFireOldtState = input;
     }
     #endregion
 
@@ -197,11 +201,6 @@ public class PlayerController : MonoBehaviour
     public void HandleDeadFrame()
     {
         _anim.speed = 0;
-    }
-
-    void ChangeFireState()
-    {
-
     }
 
     public void TakeDamage(EnemyController source)

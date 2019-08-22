@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 3167114736297313788}
   - component: {fileID: 3167114736297313790}
   - component: {fileID: 6062202266961644506}
+  - component: {fileID: 772979049938122291}
   m_Layer: 10
   m_Name: CharacterCamera
   m_TagString: MainCamera
@@ -93,7 +94,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1815
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -128,6 +129,18 @@ MonoBehaviour:
   _cam: {fileID: 3167114736297313788}
   camTarget: {fileID: 857227844401772883}
   chaseSpeed: 0.05
+--- !u!114 &772979049938122291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3167114736297313791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37105a33fc969314dbcf759f8e5d935c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3167114737572911818
 GameObject:
   m_ObjectHideFlags: 0
