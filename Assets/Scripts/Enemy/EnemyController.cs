@@ -75,6 +75,7 @@ public class EnemyController : MonoBehaviour
         currentAIState = defaultAIState;
         currentDirection = 1;
         attackRange = rightAttackCollider.GetWidth();
+        alive = true;
     }
 
     #region AI
@@ -317,6 +318,11 @@ public class EnemyController : MonoBehaviour
     virtual public int GetDamage()
     {
         return damage;
+    }
+
+    virtual public bool IsAlive()
+    {
+        return alive;
     }
     #endregion
 

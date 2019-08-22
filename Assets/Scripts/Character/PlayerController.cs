@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour  
 {
+    enum FireMode { SINGLE, BURST, RAPID};
+
     #region References
     [SerializeField]
     Rigidbody2D _rigidBody;
@@ -58,7 +60,22 @@ public class PlayerController : MonoBehaviour
     bool shooting;
     int currentDirection = 1;
     List<BulletController> bulletPool;
+    FireMode currentFireMode;
+    bool changeFireOldtState;
     #endregion
+
+    public void Init()
+    {
+        colliderHeight = _coll.bounds.size.y;
+        bulletPool = new List<BulletController>();
+
+        for (int i = bulletCap; i > 0; i--)
+        {
+            BulletController b = Instantiate<GameObject>(_bulletPrefab, _bulletPooler).GetComponent<BulletController>();
+            b.Init(this);
+            bulletPool.Add(b);
+        }
+    }
 
     #region Input
     /// <summary>
@@ -120,6 +137,24 @@ public class PlayerController : MonoBehaviour
         }
         _anim.SetBool("Shooting", shooting);
     }
+
+    public void ProcessChangeFireModeInput(bool input)
+    {
+        if(changeFireOldtState != input)
+        {
+            changeFireOldtState = input;
+            if (currentFireMode == FireMode.RAPID)
+            {
+                currentFireMode = FireMode.SINGLE;
+            }
+            else
+            {
+                currentFireMode += 1;
+            }
+            _anim.SetInteger("FireMode", (int)currentFireMode);
+        }
+        
+    }
     #endregion
 
     #region State
@@ -164,6 +199,11 @@ public class PlayerController : MonoBehaviour
         _anim.speed = 0;
     }
 
+    void ChangeFireState()
+    {
+
+    }
+
     public void TakeDamage(EnemyController source)
     {
         int incomingDamage = source.GetDamage();
@@ -189,19 +229,6 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Unity
-    void Start()
-    {
-        colliderHeight = _coll.bounds.size.y;
-        bulletPool = new List<BulletController>();
-
-        for (int i = bulletCap; i > 0; i--)
-        {
-            BulletController b = Instantiate<GameObject>(_bulletPrefab, _bulletPooler).GetComponent<BulletController>();
-            b.Init(this);
-            bulletPool.Add(b);
-        }
-    }
-
     void Update()
     {
     }
@@ -216,6 +243,11 @@ public class PlayerController : MonoBehaviour
     public int GetDamage()
     {
         return damage;
+    }
+
+    virtual public bool IsAlive()
+    {
+        return alive;
     }
 
 }

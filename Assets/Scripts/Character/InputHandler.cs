@@ -13,6 +13,7 @@ public class InputHandler : MonoBehaviour
     float movementInput;
     bool jump;
     bool shoot;
+    bool changeFireMode;
     #endregion
 
     #region Unity
@@ -26,7 +27,7 @@ public class InputHandler : MonoBehaviour
         movementInput = Input.GetAxis("HorizontalMovement");
         jump = Input.GetAxis("Jump") > 0 ? true : false;
         shoot = Input.GetAxis("Shoot") > 0 ? true : false;
-        
+        changeFireMode = Input.GetAxis("ChangeFireMode") > 0 ? true : false;
     }
 
     private void FixedUpdate()
@@ -34,6 +35,7 @@ public class InputHandler : MonoBehaviour
         playerController.ProcessMovementInput(movementInput);
         playerController.ProcessJumpInput(jump);
         playerController.ProcessShootInput(shoot);
+        playerController.ProcessChangeFireModeInput(changeFireMode);
     }
     #endregion
 }

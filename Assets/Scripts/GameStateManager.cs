@@ -39,6 +39,7 @@ public class GameStateManager : MonoBehaviour
     void SpawnPlayer()
     {
         _player = Instantiate<GameObject>(playerPrefab).GetComponent<PlayerController>();
+        _player.Init();
     }
 
     void SpawnEnemy(Vector3 pos)

@@ -65,8 +65,11 @@ public class BulletController : MonoBehaviour
     {
         if(collision.gameObject.tag == "Enemy")
         {
-            GameStateManager.instance.DealDamage(collision.GetComponent<EnemyController>(), _player);
-            Deactivate();
+            if (collision.GetComponent<EnemyController>().IsAlive())
+            {
+                GameStateManager.instance.DealDamage(collision.GetComponent<EnemyController>(), _player);
+                Deactivate();
+            }
         }
     }
 }
