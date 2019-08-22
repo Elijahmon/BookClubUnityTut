@@ -476,6 +476,8 @@ MonoBehaviour:
   groundedDistance: 0.2
   shootCooldownLength: 28
   bulletCap: 10
+  burstSprayMaxAngle: 0.3
+  RapidSprayMaxAngle: 0.6
   groundMask:
     serializedVersion: 2
     m_Bits: 256

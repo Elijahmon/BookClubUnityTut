@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviour
     float shootCooldownLength;
     [SerializeField]
     int bulletCap;
+    [SerializeField]
+    float burstSprayMaxAngle;
+    [SerializeField]
+    float RapidSprayMaxAngle;
     #endregion
 
     #region Collision
@@ -183,19 +187,34 @@ public class PlayerController : MonoBehaviour
     public void FireBullet()
     {
         Transform bulletSpawnPoint = currentDirection > 0 ? _bulletSpawnPointR : _bulletSpawnPointL;
-        if(bulletPool.Count > 0)
+        BulletController bullet;
+
+        if (bulletPool.Count > 0)
         {
-            BulletController bullet = bulletPool[0];
+            bullet = bulletPool[0];
             bulletPool.Remove(bullet);
             bullet.transform.position = bulletSpawnPoint.transform.position;
-            bullet.Activate(_bulletPooler, bulletPool, currentDirection);
         }
         else
         {
-            BulletController bullet = Instantiate<GameObject>(_bulletPrefab).GetComponent<BulletController>();
+            bullet = Instantiate<GameObject>(_bulletPrefab).GetComponent<BulletController>();
             bullet.transform.position = bulletSpawnPoint.transform.position;
-            bullet.Activate(_bulletPooler, bulletPool, currentDirection);
         }
+
+        float sprayAngle = 0;
+        switch (currentFireMode)
+        {
+            case FireMode.SINGLE:
+                break;
+            case FireMode.BURST:
+                sprayAngle = Random.Range(-burstSprayMaxAngle, burstSprayMaxAngle);
+                break;
+            case FireMode.RAPID:
+                sprayAngle = Random.Range(-RapidSprayMaxAngle, RapidSprayMaxAngle);
+                break;
+        }
+
+        bullet.Activate(_bulletPooler, bulletPool, new Vector2(currentDirection, sprayAngle));
     }
 
     public void HandleDeadFrame()
