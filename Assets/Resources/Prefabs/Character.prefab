@@ -141,6 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37105a33fc969314dbcf759f8e5d935c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cam: {fileID: 3167114736297313788}
+  shakeLerpSpeed: 0.5
 --- !u!1 &3167114737572911818
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,6 +471,7 @@ MonoBehaviour:
   _bulletSpawnPointR: {fileID: 3167114737572911817}
   _bulletCasingSpawnPoint: {fileID: 3167114737613090943}
   _cam: {fileID: 6062202266961644506}
+  _camShaker: {fileID: 772979049938122291}
   health: 0
   damage: 0
   moveSpeed: 5
@@ -478,6 +481,10 @@ MonoBehaviour:
   bulletCap: 10
   burstSprayMaxAngle: 0.3
   RapidSprayMaxAngle: 0.6
+  singleShakeMax: 0.2
+  burstShakeMax: 0.4
+  autoShakeMax: 0.6
+  shakeDuration: 2
   groundMask:
     serializedVersion: 2
     m_Bits: 256

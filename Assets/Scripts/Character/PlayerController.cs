@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour
     Transform _bulletCasingSpawnPoint;
     [SerializeField]
     ChaseCamera _cam;
+    [SerializeField]
+    CameraShake _camShaker;
     #endregion
 
     #region Stats
@@ -48,6 +50,14 @@ public class PlayerController : MonoBehaviour
     float burstSprayMaxAngle;
     [SerializeField]
     float RapidSprayMaxAngle;
+    [SerializeField]
+    float singleShakeMax;
+    [SerializeField]
+    float burstShakeMax;
+    [SerializeField]
+    float autoShakeMax;
+    [SerializeField]
+    float shakeDuration;
     #endregion
 
     #region Collision
@@ -205,12 +215,15 @@ public class PlayerController : MonoBehaviour
         switch (currentFireMode)
         {
             case FireMode.SINGLE:
+                _camShaker.ActivateScreenShake(singleShakeMax * currentDirection, singleShakeMax, shakeDuration);
                 break;
             case FireMode.BURST:
                 sprayAngle = Random.Range(-burstSprayMaxAngle, burstSprayMaxAngle);
+                _camShaker.ActivateScreenShake(burstShakeMax * currentDirection, (sprayAngle * burstShakeMax), shakeDuration);
                 break;
             case FireMode.RAPID:
                 sprayAngle = Random.Range(-RapidSprayMaxAngle, RapidSprayMaxAngle);
+                _camShaker.ActivateScreenShake(autoShakeMax * currentDirection, (sprayAngle * autoShakeMax), shakeDuration, true);
                 break;
         }
 
