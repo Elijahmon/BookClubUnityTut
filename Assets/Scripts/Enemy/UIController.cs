@@ -16,6 +16,10 @@ public class UIController : MonoBehaviour
     Image firemodeIcon;
     [SerializeField]
     TextMeshProUGUI firemodeText;
+    [SerializeField]
+    GameObject menu;
+    [SerializeField]
+    TextMeshProUGUI gameOver;
 
     [SerializeField]
     Sprite singleFiremodeSprite;
@@ -24,6 +28,10 @@ public class UIController : MonoBehaviour
     [SerializeField]
     Sprite rapidFiremodeSprite;
 
+    /// <summary>
+    /// Updates UI image and text for fire mode
+    /// </summary>
+    /// <param name="mode">New Fire Mode</param>
     public void UpdateFireMode(PlayerController.FireMode mode)
     {
         switch(mode)
@@ -46,5 +54,29 @@ public class UIController : MonoBehaviour
     public void Init()
     {
         instance = this;
+        firemodeIcon.gameObject.SetActive(false);
+        firemodeText.gameObject.SetActive(false);
+        menu.SetActive(true);
+        gameOver.gameObject.SetActive(false);
+    }
+
+    public void StartGame()
+    {
+        firemodeIcon.gameObject.SetActive(true);
+        firemodeText.gameObject.SetActive(true);
+        menu.SetActive(false);
+        gameOver.gameObject.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        firemodeIcon.gameObject.SetActive(false);
+        firemodeText.gameObject.SetActive(false);
+        gameOver.gameObject.SetActive(true);
+    }
+
+    public void OnStartGamePressed()
+    {
+        GameStateManager.instance.StartGame();
     }
 }

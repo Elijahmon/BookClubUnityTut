@@ -6,14 +6,19 @@ public class GameStateManager : MonoBehaviour
 {
 
     public static GameStateManager instance;
+    public enum GameState { MENU, GAME, GAME_OVER}
+    GameState _gameState;
 
     #region References
+    [SerializeField]
+    InputHandler _inputHandler;
     [SerializeField]
     GameObject playerPrefab;
     [SerializeField]
     GameObject enemyPrefab;
     [SerializeField]
     GameObject UIPrefab;
+    
 
     UIController _uiContoller;
     PlayerController _player;
@@ -25,10 +30,9 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        _gameState = GameState.MENU;
         _uiContoller = Instantiate<GameObject>(UIPrefab).GetComponent<UIController>();
         _uiContoller.Init();
-        SpawnPlayer();
-        SpawnEnemy(new Vector3(5, -3, 0));
     }
 
     // Update is called once per frame
@@ -38,15 +42,51 @@ public class GameStateManager : MonoBehaviour
     }
     #endregion
 
+    #region State
+    public void StartGame()
+    {
+        _gameState = GameState.GAME;
+        _uiContoller.StartGame();
+        SpawnPlayer();
+        SpawnEnemy(new Vector3(5, -3, 0));
+    }
+
+    public void GameOver()
+    {
+        _gameState = GameState.GAME_OVER;
+        _uiContoller.GameOver();
+    }
+
+    public void ProcessTryAgainInput(bool input)
+    {
+        if (_gameState == GameState.GAME_OVER && input)
+        {
+            _player.Despawn();
+            foreach(var e in enemies)
+            {
+                e.Despawn();
+            }
+            StartGame();
+        }
+        
+    }
+    #endregion
+
+    #region Utilities
     /// <summary>
     /// Spawn the player
     /// </summary>
     void SpawnPlayer()
     {
         _player = Instantiate<GameObject>(playerPrefab).GetComponent<PlayerController>();
+        _inputHandler.Init(_player);
         _player.Init();
     }
 
+    /// <summary>
+    /// Spawns an enemy
+    /// </summary>
+    /// <param name="pos">position to spawn the enemy</param>
     void SpawnEnemy(Vector3 pos)
     {
         EnemyController e = Instantiate<GameObject>(enemyPrefab, pos, enemyPrefab.transform.rotation).GetComponent<EnemyController>();
@@ -73,11 +113,17 @@ public class GameStateManager : MonoBehaviour
     {
         target.TakeDamage(source);
     }
+    #endregion
 
     #region Getters
-    public static PlayerController GetPlayerController()
+    public PlayerController GetPlayerController()
     {
-        return instance._player;
+        return _player;
+    }
+
+    public  GameState GetGameState()
+    {
+        return _gameState;
     }
     #endregion
 }

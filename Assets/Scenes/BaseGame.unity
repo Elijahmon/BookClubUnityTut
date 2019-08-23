@@ -294,6 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1323005725}
   - component: {fileID: 1323005724}
+  - component: {fileID: 1323005726}
   m_Layer: 0
   m_Name: GameStateManager
   m_TagString: Untagged
@@ -313,6 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2e19131647f1e44fac3e43e440a2c28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputHandler: {fileID: 1323005726}
   playerPrefab: {fileID: 3167114737986309627, guid: e8c7127697084a242bf05996059d3d27,
     type: 3}
   enemyPrefab: {fileID: 950603557245030953, guid: f8ec4557b9536e04b910c88d7860357f,
@@ -333,6 +335,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1323005726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323005723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18920fb76ce25df4ea4bad96f4b335c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1902639184
 GameObject:
   m_ObjectHideFlags: 0

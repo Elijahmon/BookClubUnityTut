@@ -68,7 +68,7 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        _player = GameStateManager.GetPlayerController();
+        _player = GameStateManager.instance.GetPlayerController();
         _AIStateMachine.AddStateTriggers(AIStateMachine.AIState.WAITING, RollFlipDirection); //Each time we start waiting roll to flip direction
         _AIStateMachine.AddStateTriggers(AIStateMachine.AIState.WANDER, RollFlipDirection); //Each time we start waiting roll to flip direction
         _AIStateMachine.AddStateTriggers(AIStateMachine.AIState.ALERTED, Alert);
@@ -76,6 +76,11 @@ public class EnemyController : MonoBehaviour
         currentDirection = 1;
         attackRange = rightAttackCollider.GetWidth();
         alive = true;
+    }
+
+    public void Despawn()
+    {
+        Destroy(this.gameObject);
     }
 
     #region AI

@@ -233,6 +233,7 @@ public class PlayerController : MonoBehaviour
     public void HandleDeadFrame()
     {
         _anim.speed = 0;
+        GameStateManager.instance.GameOver();
     }
 
     public void TakeDamage(EnemyController source)
@@ -256,6 +257,12 @@ public class PlayerController : MonoBehaviour
         _anim.SetBool("Dead", true);
         _anim.SetBool("Shooting", true);
         _anim.SetBool("Moving", true);
+    }
+
+    public void Despawn()
+    {
+        Destroy(_cam.gameObject);
+        Destroy(this.gameObject);
     }
     #endregion
 
