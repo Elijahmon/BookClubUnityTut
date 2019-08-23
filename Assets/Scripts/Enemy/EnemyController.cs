@@ -97,7 +97,7 @@ public class EnemyController : MonoBehaviour
     /// <summary>
     /// ded
     /// </summary>
-    protected void Die()
+    virtual protected void Die()
     {
         alive = false;
         ChangeAIState(AIStateMachine.AIState.DEAD);
@@ -114,7 +114,7 @@ public class EnemyController : MonoBehaviour
     /// Applies damage from a player source
     /// </summary>
     /// <param name="source">PlayerController source</param>
-    public void TakeDamage(PlayerController source)
+    virtual public void TakeDamage(PlayerController source)
     {
         int incomingDamage = source.GetDamage();
 
@@ -126,7 +126,24 @@ public class EnemyController : MonoBehaviour
         else
         {
             health -= incomingDamage;
+            _AIStateMachine.HitReaction();
         }
+    }
+
+    virtual public void FacePlayer()
+    {
+        if(transform.position.x - _player.transform.position.x > 0) //Player is to the right of the enemy
+        {
+            currentDirection = 1;
+            _coll.offset = new Vector2(Mathf.Abs(_coll.offset.x), _coll.offset.y); //face right
+        }
+        else
+        {
+            currentDirection = -1;
+            _coll.offset = new Vector2(Mathf.Abs(_coll.offset.x) * -1, _coll.offset.y); //face left
+        }
+        //Update Animator
+        _anim.SetInteger("Direction", currentDirection);
     }
 
     /// <summary>
@@ -210,6 +227,7 @@ public class EnemyController : MonoBehaviour
     virtual public bool CanSeePlayer()
     {
         bool spotted = false;
+        Debug.Log("d: " + Vector2.Distance(_player.transform.position, transform.position));
         if (Vector2.Distance(_player.transform.position, transform.position) <= detectionDistance) //are they close enough?
         {
             float visionAngleToPlayer = Vector2.Dot(_player.transform.position.normalized, transform.position.normalized); //Are they at an angle that makes sense? (not directly above me, or directly behind me)

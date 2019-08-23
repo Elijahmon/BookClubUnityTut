@@ -81,6 +81,12 @@ public class AIStateMachine : MonoBehaviour
             stateTriggers[newState].Invoke();
         }
     }
+
+    virtual public void HitReaction()
+    {
+        _controller.FacePlayer();
+        UpdateStateWithTriggers(AIState.ALERTED);
+    }
     
     #endregion
 

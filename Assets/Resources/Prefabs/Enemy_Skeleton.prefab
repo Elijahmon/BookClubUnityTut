@@ -59,7 +59,7 @@ MonoBehaviour:
   health: 1
   damage: 1
   speed: 2.5
-  detectionDistance: 4
+  detectionDistance: 10
   hitStunTime: 1
   attackCooldown: 2.5
   visionTolerance: 0.5
