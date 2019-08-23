@@ -43,7 +43,7 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void Start()
+    public void Init()
     {
         instance = this;
     }

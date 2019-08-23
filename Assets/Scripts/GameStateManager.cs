@@ -12,7 +12,10 @@ public class GameStateManager : MonoBehaviour
     GameObject playerPrefab;
     [SerializeField]
     GameObject enemyPrefab;
+    [SerializeField]
+    GameObject UIPrefab;
 
+    UIController _uiContoller;
     PlayerController _player;
     List<EnemyController> enemies = new List<EnemyController>();
     #endregion
@@ -22,6 +25,8 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        _uiContoller = Instantiate<GameObject>(UIPrefab).GetComponent<UIController>();
+        _uiContoller.Init();
         SpawnPlayer();
         SpawnEnemy(new Vector3(5, -3, 0));
     }
