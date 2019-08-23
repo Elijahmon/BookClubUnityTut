@@ -15,7 +15,13 @@ public class CameraShake : MonoBehaviour
     float shakeTimer;
     bool anyYDirection;
 
-
+    /// <summary>
+    /// Sets the camera to shake based on a set of parameters
+    /// </summary>
+    /// <param name="xStrength">Max distance the camera can shake on the X Axis (Inversed) </param>
+    /// <param name="yStrength">Max distance the camera can shake on the Y Axis (only up by default)</param>
+    /// <param name="duration">Duration the camera shakes over</param>
+    /// <param name="anyDirection">Allow the camera to shake up and down on the Y Axis</param>
     public void ActivateScreenShake(float xStrength, float yStrength, float duration, bool anyDirection=false)
     {
         shakeXStrength = xStrength;

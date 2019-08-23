@@ -211,19 +211,19 @@ public class PlayerController : MonoBehaviour
             bullet.transform.position = bulletSpawnPoint.transform.position;
         }
 
-        float sprayAngle = 0;
+        float sprayAngle = 0; //Single fire mode has no spray
         switch (currentFireMode)
         {
             case FireMode.SINGLE:
-                _camShaker.ActivateScreenShake(singleShakeMax * currentDirection, singleShakeMax, shakeDuration);
+                _camShaker.ActivateScreenShake(singleShakeMax * currentDirection, singleShakeMax, shakeDuration); //Shake backwards from player direction
                 break;
             case FireMode.BURST:
                 sprayAngle = Random.Range(-burstSprayMaxAngle, burstSprayMaxAngle);
-                _camShaker.ActivateScreenShake(burstShakeMax * currentDirection, (sprayAngle * burstShakeMax), shakeDuration);
+                _camShaker.ActivateScreenShake(burstShakeMax * currentDirection, (sprayAngle * burstShakeMax), shakeDuration); //Shake at the inverse of the spray angle
                 break;
             case FireMode.RAPID:
                 sprayAngle = Random.Range(-RapidSprayMaxAngle, RapidSprayMaxAngle);
-                _camShaker.ActivateScreenShake(autoShakeMax * currentDirection, (sprayAngle * autoShakeMax), shakeDuration, true);
+                _camShaker.ActivateScreenShake(autoShakeMax * currentDirection, (sprayAngle * autoShakeMax), shakeDuration, true); //Shake at the inverse of the spray angle (allow down shake
                 break;
         }
 
