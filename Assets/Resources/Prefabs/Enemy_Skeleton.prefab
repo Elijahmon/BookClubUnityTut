@@ -56,8 +56,8 @@ MonoBehaviour:
   _player: {fileID: 0}
   rightAttackCollider: {fileID: 3712673391843901436}
   leftAttackCollider: {fileID: 7539749950069362083}
-  health: 0
-  damage: 0
+  health: 1
+  damage: 1
   speed: 2.5
   detectionDistance: 4
   hitStunTime: 1

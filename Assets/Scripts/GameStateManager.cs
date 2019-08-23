@@ -15,14 +15,13 @@ public class GameStateManager : MonoBehaviour
     [SerializeField]
     GameObject playerPrefab;
     [SerializeField]
-    GameObject enemyPrefab;
-    [SerializeField]
     GameObject UIPrefab;
     
 
     UIController _uiContoller;
     PlayerController _player;
     List<EnemyController> enemies = new List<EnemyController>();
+    List<EnemySpawnerController> spawners = new List<EnemySpawnerController>();
     #endregion
 
     #region Unity
@@ -48,7 +47,7 @@ public class GameStateManager : MonoBehaviour
         _gameState = GameState.GAME;
         _uiContoller.StartGame();
         SpawnPlayer();
-        SpawnEnemy(new Vector3(5, -3, 0));
+        SpawnEnemies();
     }
 
     public void GameOver()
@@ -84,14 +83,19 @@ public class GameStateManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawns an enemy
+    /// Triggers all spawners in the scene to spawn a single enemy
     /// </summary>
-    /// <param name="pos">position to spawn the enemy</param>
-    void SpawnEnemy(Vector3 pos)
+    void SpawnEnemies()
     {
-        EnemyController e = Instantiate<GameObject>(enemyPrefab, pos, enemyPrefab.transform.rotation).GetComponent<EnemyController>();
-        enemies.Add(e);
-        e.Init();
+        foreach(var spawner in FindObjectsOfType<EnemySpawnerController>())
+        {
+            spawners.Add(spawner);
+        }
+
+        foreach(var spawner in spawners)
+        {
+            spawner.SpawnOne(enemies);
+        }
     }
 
     /// <summary>
