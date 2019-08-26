@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour  
 {
-    public enum FireMode { SINGLE, BURST, RAPID};
+    public enum FireMode { SINGLE, BURST, RAPID };
 
     #region References
     [SerializeField]
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
     int currentDirection = 1;
     List<BulletController> bulletPool;
     FireMode currentFireMode;
-    bool changeFireOldtState;
+    bool changeFireOldState;
     #endregion
 
     public void Init()
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
             bulletPool.Add(b);
         }
         UIController.instance.UpdateFireMode(currentFireMode);
-        changeFireOldtState = false;
+        changeFireOldState = false;
     }
 
     #region Input
@@ -130,6 +130,7 @@ public class PlayerController : MonoBehaviour
     /// <param name="input">true to jump</param>
     public void ProcessJumpInput(bool input)
     {
+        
         if (grounded && input)
         {
             _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _rigidBody.velocity.y + jumpHeight);
@@ -156,7 +157,7 @@ public class PlayerController : MonoBehaviour
 
     public void ProcessChangeFireModeInput(bool input)
     {
-        if(changeFireOldtState != input && input) //Is the button pressed down without being previously pressed down
+        if(changeFireOldState != input && input) //Is the button pressed down without being previously pressed down
         {
             
             if (currentFireMode == FireMode.RAPID)
@@ -171,7 +172,7 @@ public class PlayerController : MonoBehaviour
             UIController.instance.UpdateFireMode(currentFireMode);
             //Debug.Log("Changing Firemode");
         }
-        changeFireOldtState = input;
+        changeFireOldState = input;
     }
     #endregion
 

@@ -61,10 +61,12 @@ public class GameStateManager : MonoBehaviour
         if (_gameState == GameState.GAME_OVER && input)
         {
             _player.Despawn();
-            foreach(var e in enemies)
+            foreach(EnemyController e in enemies)
             {
                 e.Despawn();
             }
+            enemies = new List<EnemyController>();
+            spawners = new List<EnemySpawnerController>();
             StartGame();
         }
         

@@ -45,4 +45,9 @@ public class AttackColliderEventHandler : MonoBehaviour
     {
         return _coll.size.x;
     }
+
+    public float GetOffset()
+    {
+        return _coll.offset.x;
+    }
 }

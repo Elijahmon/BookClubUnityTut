@@ -26,4 +26,9 @@ public class EnemyAmationEventHandler : MonoBehaviour
     {
         _enemy.ResetAlert();
     }
+
+    void HitCompleted()
+    {
+        _enemy.ResetHit();
+    }
 }

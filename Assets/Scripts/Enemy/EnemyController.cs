@@ -74,7 +74,7 @@ public class EnemyController : MonoBehaviour
         _AIStateMachine.AddStateTriggers(AIStateMachine.AIState.ALERTED, Alert);
         currentAIState = defaultAIState;
         currentDirection = 1;
-        attackRange = rightAttackCollider.GetWidth();
+        attackRange = rightAttackCollider.GetWidth() * transform.localScale.x;
         alive = true;
     }
 
@@ -126,13 +126,26 @@ public class EnemyController : MonoBehaviour
         else
         {
             health -= incomingDamage;
-            _AIStateMachine.HitReaction();
+            OnHit();
         }
     }
 
-    virtual public void FacePlayer()
+    virtual protected void OnHit()
     {
-        if(transform.position.x - _player.transform.position.x > 0) //Player is to the right of the enemy
+        _rigidbody.velocity = Vector2.zero;
+        FacePlayer();
+        _anim.SetBool("Hit", true);
+        _anim.SetBool("Moving", false);
+        _anim.SetBool("Attacking", false);
+    }
+
+
+    /// <summary>
+    /// Turns the enemy to face the player
+    /// </summary>
+    virtual protected void FacePlayer()
+    {
+        if(transform.position.x < _player.transform.position.x) //Player is to the right of the enemy
         {
             currentDirection = 1;
             _coll.offset = new Vector2(Mathf.Abs(_coll.offset.x), _coll.offset.y); //face right
@@ -212,7 +225,8 @@ public class EnemyController : MonoBehaviour
     {
         if (currentAIState != AIStateMachine.AIState.ATTACKING) //Am I already attacking?
         {
-            if (Vector2.Distance(_player.transform.position, transform.position) <= attackRange) //Are they within my attack range?
+            
+            if (Vector2.Distance(new Vector2(_player.transform.position.x, 0), new Vector2(transform.position.x, 0)) <= attackRange) //Are they within my attack range?
             {
                 return true;
             }
@@ -227,7 +241,6 @@ public class EnemyController : MonoBehaviour
     virtual public bool CanSeePlayer()
     {
         bool spotted = false;
-        Debug.Log("d: " + Vector2.Distance(_player.transform.position, transform.position));
         if (Vector2.Distance(_player.transform.position, transform.position) <= detectionDistance) //are they close enough?
         {
             float visionAngleToPlayer = Vector2.Dot(_player.transform.position.normalized, transform.position.normalized); //Are they at an angle that makes sense? (not directly above me, or directly behind me)
@@ -299,6 +312,14 @@ public class EnemyController : MonoBehaviour
     public void ResetAlert()
     {
         _anim.SetBool("Alert", false);
+    }
+
+    /// <summary>
+    /// Sets the Hit animator field to false
+    /// </summary>
+    public void ResetHit()
+    {
+        _anim.SetBool("Hit", false); ;
     }
 
     public void HandleDeadFrame()
