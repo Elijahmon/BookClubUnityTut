@@ -5,6 +5,8 @@ using UnityEngine;
 public class BulletController : MonoBehaviour
 {
     [SerializeField]
+    Animator _anim;
+    [SerializeField]
     float lifeTime;
     [SerializeField]
     float speed;
@@ -15,17 +17,20 @@ public class BulletController : MonoBehaviour
 
     float lifeTimer;
     Vector2 direction;
+    bool hit;
    
     // Start is called before the first frame update
     public void Init(PlayerController player)
     {
+        
         _player = player;
+        hit = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (lifeTimer > 0)
+        if (lifeTimer > 0 && !hit)
         {
             if (direction.x > 0)
             {
@@ -56,8 +61,18 @@ public class BulletController : MonoBehaviour
         gameObject.SetActive(true);
     }
 
+    public void OnHit()
+    {
+        transform.localScale = new Vector3(.5f, .5f, 1);
+        hit = true;
+        _anim.SetTrigger("Hit");
+    }
+
     public void Deactivate()
     {
+        transform.localScale = new Vector3(0.05f, 0.05f, 1);
+        hit = false;
+        _anim.ResetTrigger("Hit");
         gameObject.SetActive(false);
         transform.SetParent(poolParent, false);
         pool.Add(this);
@@ -70,13 +85,13 @@ public class BulletController : MonoBehaviour
             if (collision.GetComponent<EnemyController>().IsAlive())
             {
                 GameStateManager.instance.DealDamage(collision.GetComponent<EnemyController>(), _player);
-                Deactivate();
+                OnHit();
             }
             
         }
         else if (collision.gameObject.tag == "Ground")
         {
-            Deactivate();
+            OnHit();
         }
     }
 }
