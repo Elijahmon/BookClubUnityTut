@@ -41,7 +41,7 @@ public class BulletController : MonoBehaviour
         {
             Deactivate();
         }
-        
+         
     }
 
     public void Activate(Transform pooler, List<BulletController> bulletpool, Vector2 currentDirection)
@@ -51,6 +51,8 @@ public class BulletController : MonoBehaviour
         poolParent = pooler;
         pool = bulletpool;
         lifeTimer = lifeTime;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg -90;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         gameObject.SetActive(true);
     }
 
