@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
     ChaseCamera _cam;
     [SerializeField]
     CameraShake _camShaker;
+    [SerializeField]
+    ParticleSystem smokeParticle;
+    [SerializeField]
+    float smokeSpawnX;
     #endregion
 
     #region Stats
@@ -91,6 +95,8 @@ public class PlayerController : MonoBehaviour
         }
         UIController.instance.UpdateFireMode(currentFireMode);
         changeFireOldState = false;
+
+        smokeParticle.Stop();
     }
 
     #region Input
@@ -229,6 +235,7 @@ public class PlayerController : MonoBehaviour
         }
 
         bullet.Activate(_bulletPooler, bulletPool, new Vector2(currentDirection, sprayAngle));
+        smokeParticle.Play();
     }
 
     public void HandleDeadFrame()
@@ -270,6 +277,19 @@ public class PlayerController : MonoBehaviour
     #region Unity
     void Update()
     {
+    }
+
+    void FixedUpdate()
+    {
+        if(shooting)
+        {
+            smokeParticle.gameObject.transform.localPosition = new Vector3(smokeSpawnX * currentDirection, smokeParticle.transform.localPosition.y);
+
+        }
+        else
+        {
+            smokeParticle.Stop();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
