@@ -235,7 +235,6 @@ public class PlayerController : MonoBehaviour
         }
 
         bullet.Activate(_bulletPooler, bulletPool, new Vector2(currentDirection, sprayAngle));
-        smokeParticle.Play();
     }
 
     public void HandleDeadFrame()
@@ -272,6 +271,18 @@ public class PlayerController : MonoBehaviour
         Destroy(_cam.gameObject);
         Destroy(this.gameObject);
     }
+
+    public void ToggleSmoke(bool toggle)
+    {
+        if(toggle)
+        {
+            smokeParticle.Play();
+        }
+        else
+        {
+            smokeParticle.Stop();
+        }
+    }
     #endregion
 
     #region Unity
@@ -284,7 +295,6 @@ public class PlayerController : MonoBehaviour
         if(shooting)
         {
             smokeParticle.gameObject.transform.localPosition = new Vector3(smokeSpawnX * currentDirection, smokeParticle.transform.localPosition.y);
-
         }
         else
         {

@@ -16,4 +16,13 @@ public class CharacterAnimatorEventHandler : MonoBehaviour
     {
         _controller.HandleDeadFrame();
     }
+
+    void StartSmoke()
+    {
+        _controller.ToggleSmoke(true);
+    }
+    void StopSmoke()
+    {
+        _controller.ToggleSmoke(false);
+    }
 }
