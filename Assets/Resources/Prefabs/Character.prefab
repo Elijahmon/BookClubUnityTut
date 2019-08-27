@@ -458,9 +458,9 @@ MonoBehaviour:
   _bulletSpawnPointR: {fileID: 3167114737572911817}
   _bulletCasingSpawnPoint: {fileID: 3167114737613090943}
   casingSpawnX: 0.28
-  casingFireMinYValue: 0.5
-  casingFireMaxYValue: 0.7
-  casingFireSpeed: 1
+  casingFireMinYValue: 0.8
+  casingFireMaxYValue: 1.2
+  casingFireSpeed: 2
   casingCap: 250
   _cam: {fileID: 6062202266961644506}
   _camShaker: {fileID: 772979049938122291}
