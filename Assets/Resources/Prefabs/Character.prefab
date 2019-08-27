@@ -94,7 +94,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1815
+    m_Bits: 3863
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -197,7 +197,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3167114737613090936}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.079, y: 0.21, z: 0}
+  m_LocalPosition: {x: 0.28, y: 0.435, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3167114737986309625}
@@ -457,6 +457,11 @@ MonoBehaviour:
   _bulletSpawnPointL: {fileID: 3167114736133449853}
   _bulletSpawnPointR: {fileID: 3167114737572911817}
   _bulletCasingSpawnPoint: {fileID: 3167114737613090943}
+  casingSpawnX: 0.28
+  casingFireMinYValue: 0.5
+  casingFireMaxYValue: 0.7
+  casingFireSpeed: 1
+  casingCap: 250
   _cam: {fileID: 6062202266961644506}
   _camShaker: {fileID: 772979049938122291}
   smokeParticle: {fileID: 6755777455554225791}

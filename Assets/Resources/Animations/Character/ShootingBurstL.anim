@@ -170,6 +170,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.13333334
+    functionName: OnCasing
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.2
     functionName: StopSmoke
     data: 
@@ -191,6 +198,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.3
+    functionName: OnCasing
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.36666667
     functionName: StopSmoke
     data: 
@@ -207,6 +221,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.45
     functionName: StartSmoke
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.46666667
+    functionName: OnCasing
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

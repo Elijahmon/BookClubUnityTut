@@ -12,6 +12,11 @@ public class CharacterAnimatorEventHandler : MonoBehaviour
         _controller.FireBullet();
     }
 
+    void OnCasing()
+    {
+        _controller.FireCasing();
+    }
+
     void DeadFrame()
     {
         _controller.HandleDeadFrame();

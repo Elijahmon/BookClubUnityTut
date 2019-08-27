@@ -26,6 +26,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     Transform _bulletCasingSpawnPoint;
     [SerializeField]
+    float casingSpawnX;
+    [SerializeField]
+    float casingFireMinYValue;
+    [SerializeField]
+    float casingFireMaxYValue;
+    [SerializeField]
+    float casingFireSpeed;
+    [SerializeField]
+    int casingCap;
+    [SerializeField]
     ChaseCamera _cam;
     [SerializeField]
     CameraShake _camShaker;
@@ -80,6 +90,8 @@ public class PlayerController : MonoBehaviour
     List<BulletController> bulletPool;
     FireMode currentFireMode;
     bool changeFireOldState;
+    List<BulletCasingController> casingPool;
+    int casingIndex;
     #endregion
 
     public void Init()
@@ -93,6 +105,16 @@ public class PlayerController : MonoBehaviour
             b.Init(this);
             bulletPool.Add(b);
         }
+
+        casingPool = new List<BulletCasingController>();
+        casingIndex = 0;
+        for(int i = casingCap; i > 0; i--)
+        {
+            BulletCasingController c = Instantiate<GameObject>(_bulletCasingPrefab, _bulletCasingSpawnPoint).GetComponent<BulletCasingController>();
+            c.Init(_bulletCasingSpawnPoint);
+            casingPool.Add(c);
+        }
+
         UIController.instance.UpdateFireMode(currentFireMode);
         changeFireOldState = false;
 
@@ -237,6 +259,23 @@ public class PlayerController : MonoBehaviour
         bullet.Activate(_bulletPooler, bulletPool, new Vector2(currentDirection, sprayAngle));
     }
 
+    public void FireCasing()
+    {
+        if (casingIndex > casingPool.Count - 1)
+        {
+            casingIndex = 0;
+        }
+        BulletCasingController c = casingPool[casingIndex];
+        if(c.Alive() == true)
+        {
+            c.Retrieve();
+        }
+        Vector2 fireDirection = new Vector2(currentDirection * -1, Random.Range(casingFireMinYValue, casingFireMaxYValue));
+        c.Fire(fireDirection, casingFireSpeed);
+        casingIndex++;
+
+    }
+
     public void HandleDeadFrame()
     {
         _anim.speed = 0;
@@ -295,6 +334,7 @@ public class PlayerController : MonoBehaviour
         if(shooting)
         {
             smokeParticle.gameObject.transform.localPosition = new Vector3(smokeSpawnX * currentDirection, smokeParticle.transform.localPosition.y);
+            _bulletCasingSpawnPoint.localPosition = new Vector3(casingSpawnX * currentDirection, _bulletCasingSpawnPoint.localPosition.y);
         }
         else
         {
