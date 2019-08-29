@@ -18,6 +18,9 @@ public class BulletController : MonoBehaviour
     float lifeTimer;
     Vector2 direction;
     bool hit;
+
+    public enum HitType {NONE, ENEMY, GROUND}
+    HitType hitTarget;
    
     // Start is called before the first frame update
     public void Init(PlayerController player)
@@ -61,11 +64,23 @@ public class BulletController : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    public void OnHit()
+    public void OnHit(HitType type)
     {
+        
         transform.localScale = new Vector3(.5f, .5f, 1);
         hit = true;
-        _anim.SetTrigger("Hit");
+        switch(type)
+        {
+            case HitType.GROUND:
+                DebrisManager.instance.SpawnBulletHole(transform.position);
+                _anim.SetTrigger("Hit");
+                break;
+            case HitType.ENEMY:
+                _anim.SetTrigger("Hit");
+                break;
+
+        }   
+        
     }
 
     public void Deactivate()
@@ -84,14 +99,16 @@ public class BulletController : MonoBehaviour
         {
             if (collision.GetComponent<EnemyController>().IsAlive())
             {
+                hitTarget = HitType.ENEMY;
                 GameStateManager.instance.DealDamage(collision.GetComponent<EnemyController>(), _player);
-                OnHit();
+                OnHit(hitTarget);
             }
             
         }
         else if (collision.gameObject.tag == "Ground")
         {
-            OnHit();
+            hitTarget = HitType.GROUND;
+            OnHit(hitTarget); ;
         }
     }
 }

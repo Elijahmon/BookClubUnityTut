@@ -11,6 +11,8 @@ public class GameStateManager : MonoBehaviour
 
     #region References
     [SerializeField]
+    DebrisManager _debrisManager;
+    [SerializeField]
     InputHandler _inputHandler;
     [SerializeField]
     GameObject playerPrefab;
@@ -29,6 +31,7 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        _debrisManager.Init();
         _gameState = GameState.MENU;
         _uiContoller = Instantiate<GameObject>(UIPrefab).GetComponent<UIController>();
         _uiContoller.Init();
